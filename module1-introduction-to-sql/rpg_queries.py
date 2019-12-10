@@ -89,7 +89,7 @@ conn.commit()
 
 #Return total weapons each character has (first 20 rows)
 curs_ctw = conn.cursor()
-query_ctw = 'SELECT * FROM armory_item as ai, charactercreator_character_inventory as cci, armory_weapon as aw WHERE ai.item_id = cci.item_id AND ai.item_id = aw.item_ptr_id ORDER BY cci.character_id ASC LIMIT 20;'
+query_ctw = 'SELECT cci.character_id, COUNT (*) Total_Items FROM charactercreator_character_inventory as cci, armory_item as ai , armory_weapon as aw WHERE cci.item_id = ai.item_id AND ai.item_id = aw.item_ptr_id GROUP BY character_id LIMIT 20;'
 print('\nTotal weapons each character has:', curs_ctw.execute(query_ctw).fetchall())
 curs_ctw.close()
 conn.commit()
